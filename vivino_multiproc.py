@@ -27,7 +27,9 @@ def get_args():
 
 
 def crawl(titles:list,lock_print,lock_file,procNum:int,outputdir:str):
-    driver = webdriver.Chrome('./chromedriver.exe')
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    driver = webdriver.Chrome('./chromedriver.exe',options=options)
     for idx,winename in enumerate(titles):
         try:
             lock_print.acquire()
@@ -94,7 +96,7 @@ def crawl(titles:list,lock_print,lock_file,procNum:int,outputdir:str):
             for i in range(50):
                 actions.send_keys(Keys.END).perform()
 
-            time.sleep(1)
+            time.sleep(2)
             data = driver.find_elements_by_class_name('communityReview__reviewText--2bfLj') 
             time.sleep(2)
             l = []
